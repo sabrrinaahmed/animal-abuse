@@ -1,0 +1,29 @@
+  .navbar-nav a::before {
+    transition: 300ms;
+    height: 4px;
+    content: "";
+    position: absolute;
+    background-color: #336699;
+    opacity: 1
+  }
+
+  .navbar-nav a::before {
+    width: 0%;
+    left: 0px;
+    bottom: 0px;
+  }
+
+  .navbar-nav a:hover::before {
+    left: 0px;
+    width: 100%;
+  }
+
+  .navbar-nav .active a::after {
+    border-bottom: 4px solid #336699;
+    bottom: 0px;
+    content: " ";
+    left: 0;
+    position: absolute;
+    right: 0; 
+  }
+

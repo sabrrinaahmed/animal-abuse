@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% load static %}
+
+{% block title %}Search Animal Abuser{% endblock %}
+
+{% block content %}
+    <form method="get">
+        <div class="well">
+            <h4 style="margin-top: 0"><b>Search</b></h4>
+            <div class="row">
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.name.label_tag }}
+                    {% render_field filter.form.name class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.county.label_tag }}
+                    {% render_field filter.form.county class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                   {{ filter.form.state.label_tag }}
+                   <!--{% render_field filter.form.state class="form-control" %}-->
+                   <select id = 'state' class ='form-control' name = 'state' placeholder='Choose...'>
+                      <option value =''>Choose...</option>
+                      {% for st, state in states.items %}
+                      <option value = '{{st}}'>{{state}}</option>
+                      {% endfor %}
+                   </select>
+                </div>
+                
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.Offense.label_tag }}
+                    {% render_field filter.form.Offense class="form-control" %}
+                    <!-- With multiple selections
+                    <select id = 'Offense' class ='form-control' name = 'Offense'>
+                        <option value =''>Choose...</option>
+                        {% for k, v in offenses.items  %}
+                            <option value ='{{k}}'>{{v}}</option>
+                        {% endfor %} 
+                    </select>
+                  -->
+                </div>
+                
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.convictiondate.label_tag }}
+                    <!--<input type="date" class="form-control" id = "convictiondate" >-->
+                    {% render_field filter.form.convictiondate type="date" class="form-control" %}
+                </div>
+                
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.convictionyear.label_tag }}
+                    <!--<input type="number" min=2010 class="form-control" id = "convictionyear" >-->
+                    {% render_field filter.form.convictionyear min=2010 class="form-control" placeholder='Conviction Year' %}
+                </div>
+                <!--<div class="form-group col-sm-8 col-md-6">
+                    {{ filter.form.groups.label_tag }}
+                <div>
+                {% for choice in filter.form.groups %}
+                    <label class="checkbox-inline">
+                        {{ choice.tag }} {{ choice.choice_label }}
+                    </label>
+                {% endfor %}
+                </div>
+            </div>
+        </div> -->
+            </div>
+        
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>   
+        </div> 
+    </form>
+
+
+
+  <table id="searchtable" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>County</th>
+        <th>State</th>
+        <th>Offense</th>
+        <th>Date conviction</th>
+<!--         <th>Groups</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in filter.qs %}
+        <tr>
+          <td><a href="{{ user.id }}/">{{ user.name }}</td>
+          <td>{{ user.county }}</td>
+          <td>{{ user.state }}</td>
+          <td>{{ user.Offense }}</td>
+          <td>{{ user.convictiondate }}</td>
+<!--           <td>
+            {% for group in user.groups.all %}
+              {{ group }}
+            {% empty %}
+              <em class="text-muted">No group</em>
+            {% endfor %}
+          </td>
+        </tr> -->
+      {% empty %}
+        <tr>
+          <td colspan="5">No matching records found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% block javascript %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('#searchtable').DataTable({
+            destroy: true,
+            sDom: 'lrtip'
+          });
+        $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+  {% endblock %}
+
+{% endblock %}

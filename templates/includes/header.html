@@ -1,0 +1,72 @@
+{% load static %}
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu" aria-expanded="false">
+      
+
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+
+      <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-paw"></i> Animal Abuse Search</a>
+    </div>
+    
+
+
+    <p class="nav navbar-text hidden-xs navbar-right">Hello, {{request.user}}!</p>
+
+    <div class="collapse navbar-collapse" id="main-menu">
+      <ul class="nav navbar-nav">
+        <li {% if '/search/' in request.path %} class="active"{% endif %}>
+          <a href="{% url 'search' %}">Search</a>
+        </li>
+        <li {% if '/submitnew/' in request.path %} class="active"{% endif %}>
+          <a href="{% url 'submitnew' %}">Submit New</a>
+        </li>
+      </ul>
+    
+
+      <ul class="nav navbar-nav navbar-right">
+          
+          {% if user.is_authenticated %}
+
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="{% url 'profile' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Profile <i class="fa fa-caret-down"></i></a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Manage Submission</a></li>
+                  </ul>
+              </li>
+
+
+
+
+              <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          {% else %}
+              <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+              <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a></li>
+
+          {% endif %}
+    </ul>
+
+    </div>
+        <!--
+        <div class="hello-msg">Hello, {{request.user}} | 
+          {% if user.is_authenticated %}{{request.user}}
+               <a href="{% url 'logout' %}">Logout</a>
+          {% else %}
+               <a href="{% url 'login' %}">Login</a> or
+               <a href="{% url 'register' %}">Register</a>
+          {% endif %}
+        </div>-->
+
+  </div>
+
+</nav>

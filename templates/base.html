@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- For Table must be on head -->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+   
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="shortcut icon" type='image/png' href="{% static 'favicon.ico'  %}">
+
+    <!--Fone Awesome-->
+    <script src="https://kit.fontawesome.com/efde13ccc9.js" crossorigin="anonymous"></script>
+    {% block cssfiles%}
+    {% endblock%}
+
+     <style type="text/css">
+      .page-header {
+        margin-top: 0;}
+        
+      .content-section {
+        background: #ffffff;
+        padding: 10px 20px;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        margin-bottom: 20px;
+      }
+
+      .account-heading {
+        font-size: 2.5rem;
+      }
+      .article-img {
+        height: 105px;
+        width: 105px;
+        margin-right: 16px;
+      }
+      .dropdown:hover>.dropdown-menu {
+        display: block;
+      }
+      .dropdown-item:hover>.dropdown-menu {
+        display: block;
+      }
+
+      .navbar-nav .nav-link{display:inline-block;}
+         
+      .ml-auto {display:inline-block!important;}
+
+      .dropdown>.dropdown-toggle:active {
+        pointer-events: none;
+      }
+    </style>
+    
+
+  </head>
+
+
+  <body>
+    {% include 'includes/header.html' %}
+
+    {% block usercontent %}
+    {% endblock %}
+
+
+    <div class="container">
+      <!--Display messages when creating account successfully -->
+      {% if messages %}
+        {%for message in messages %}
+          <div class="alert alert-{{ message.tags }}" >
+            {{ message }}
+          </div>
+        {% endfor%}
+      {% endif%}
+
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    
+      
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block javascript %}
+    {% endblock %}
+    
+  </body>
+</html>
