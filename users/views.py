@@ -29,10 +29,13 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
+# Send emails using sendGrid
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 
-
-# Create your views here.
+'''# Create your views here.
 def registerPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -84,22 +87,67 @@ def registerPage(request):
 
         context = {'form': form}
         return render(request, 'register.html', context)
+'''
+# Send grid testing
+def registerPage(request):
+
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 
 
-'''def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        login(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    if request.user.is_authenticated:
+        return redirect('home')
     else:
-        return HttpResponse('Activation link is invalid!')'''
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST) 
+            from_email = Email("app187760892@heroku.com")
+            if form.is_valid():
+                
+                #form.save()
+                user = form.save(commit=False)
+
+                user.is_active = False
+                user.save()
+                
+                current_site = get_current_site(request)
+                email_subject = 'Activate your account'
+                email_body = {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                }
+                domain = get_current_site(request).domain
+                
+                link = reverse('activate', kwargs={
+                               'uidb64': email_body['uid'], 'token': email_body['token']})
+                activate_url = 'http://' + domain + link
+                message = 'Hi ' + user.username + ',\n\nPlease use the following link to activate your account:\n' + activate_url + '\n\nThanks,'                                                                  
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                    email_subject,
+                    message,
+                    'nonreply@gmail.com',
+                    to = [to_email],
+                )
+                mail = Mail(from_email, email_subject, to_email, message)
+                response = sg.client.mail.send.post(request_body=mail.get())
+
+                #email.send()
+
+
+                username = form.cleaned_data.get('username')
+                messages.success(request, f'Hi, {user}! A verification email has been sent to {to_email}! Please follow the email instruction to activate your account.')
+                #print(username)
+
+                return redirect('login')
+
+        else:
+            form = CreateUserForm()
+
+
+        context = {'form': form}
+        return render(request, 'register.html', context)
+
 
 
 class VerificationView(View):
