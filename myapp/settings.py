@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'g8v%4g=sm+ld(qp$6mpz4i)0t-)yao69vu1)a9*7-%gfelqv9q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#DEBUG = True
 DEBUG = False
 
 ALLOWED_HOSTS = ['animal-abuse-registry.herokuapp.com', '127.0.0.1']
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     # Your own apps
     'animalabuse',
     'users.apps.UsersConfig',
-    #'animalabuse.apps.AnimalAbuseConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,11 +136,12 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -155,6 +156,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
-#EMAIL_HOST_USER = 'lemonning0713@gmail.com'
-#EMAIL_HOST_PASSWORD = 'lygpoeizwzuavalf'
+
 
