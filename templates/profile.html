@@ -11,18 +11,27 @@
                 {% if user.image %}
                 <img class="user-avatar" src="{{ user.image }}" width="150" height="200" alt="profile">
                 {% else %}
-                <img class="user-avatar" src="{% static 'images/default.png' %}" width="150" height="200" alt="no image">
+                        {{image_name}}
+                        {% with 'images/'|add:image_name|add:'.png' as image_static %} 
+                            
+                            <img class="user-avatar" src={% static image_static %} width="150" height="200">
+
+                        {% endwith %}
                 {% endif %}
+               
+                
                 <div class="account-details">
-                    <h2 class="username">{{ user.name }}</h2>
+                    <h2 class="username">{{ user.name.upper }}</h2>
                     <div class="user-personal-info">
-                        <div class="user-title meta"><span><b>Name: </b>{{ user.name }}</span></div>
+                        <div class="user-title meta"><span><b>Name: </b>{{ user.name.title }}</span></div>
                         <div class="user-title meta"><span><b>Date of Birth: </b>{{ user.DOB }}</span></div>
                         <div class="user-title meta"><span><b>Age: </b>{{ user.age }}</span></div>
+                        <div class="user-title meta"><span><b>Address: </b>{{ user.Address }}</span></div>
                         <div class="user-title meta"><span><b>County: </b>{{ user.county.title }}</span></div>
                         <div class="user-title meta"><span><b>State: </b>{{ user.state }}</span></div>
                         <div class="user-title meta"><span><b>Offense Type: </b>{{ user.Offense.capitalize }}</span></div>
                         <div class="user-title meta"><span><b>Date of Conviction: </b>{{ user.convictiondate }}</span></div>
+                        <div class="user-title meta"><span><b>Date of Expiration: </b>{{ user.expirationdate }}</span></div>
                     </div>
 
                 </div>

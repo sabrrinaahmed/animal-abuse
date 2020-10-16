@@ -53,17 +53,18 @@ def profile_upload(request):
     next(io_string)
     for column in csv.reader(io_string, delimiter=',', quotechar='"'):
             _, created = animalabuse.objects.update_or_create(
-                name = column[1],
-                DOB = datetime.strptime(column[2], "%m/%d/%y"),
-                Age = int(column[3]),
-                Address = column[4].split('"')[1 ],
-                county = column[5],
-                state = column[6],
-                Offense = column[7],
-                convictiondate = datetime.strptime(column[8], "%m/%d/%y"),
-                expirationdate = datetime.strptime(column[9], "%m/%d/%y"),
-                image = column[10]
+                name = column[0].upper(),
+                DOB = datetime.strptime(column[1], "%m/%d/%y") if column[1] != '' else None,
+                Age = int(column[2]) if column[2] != '' else None,
+                Address = column[3].split('"')[1 ] if column[3] != '' else 'UNAVAILABLE',
+                county = column[4],
+                state = column[5],
+                Offense = column[6].upper() if column[6] != '' else 'UNAVAILABLE',
+                convictiondate = datetime.strptime(column[7], "%m/%d/%y") if column[7] != '' else None,
+                expirationdate = datetime.strptime(column[8], "%m/%d/%y") if column[8] != '' else None,
+                image = column[9]
             )
+    messages.success(request,u"Thank you for your submission !")
     context = {}
     return render(request, template, context)
 
@@ -179,9 +180,18 @@ def search(request):
 def user_profile_view(request, user_id):
     """User profile page."""
     user = get_object_or_404(animalabuse, id=user_id)
+
+    from django.contrib.staticfiles import finders
+    if finders.find('images/'+ f'{user.name}' +'.png') != '':
+        image_name = user.name
+    else:
+        image_name = 'default'
+    
     context = {'user': user,
                'title': f'{user.name}\'s Profile',
-               'path': request.path}
+               'path': request.path,
+               'image_name':image_name}
+
     return render(request, 'profile.html', context)
 
 
