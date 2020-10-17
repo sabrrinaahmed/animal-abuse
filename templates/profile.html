@@ -11,7 +11,6 @@
                 {% if user.image %}
                 <img class="user-avatar" src="{{ user.image }}" width="150" height="200" alt="profile">
                 {% else %}
-                        {{image_name}}
                         {% with 'images/'|add:image_name|add:'.png' as image_static %} 
                             
                             <img class="user-avatar" src={% static image_static %} width="150" height="200">

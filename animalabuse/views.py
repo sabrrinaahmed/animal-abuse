@@ -182,11 +182,11 @@ def user_profile_view(request, user_id):
     user = get_object_or_404(animalabuse, id=user_id)
 
     from django.contrib.staticfiles import finders
-    if finders.find('images/'+ f'{user.name}' +'.png') != '':
-        image_name = user.name
-    else:
+    if finders.find('images/'+ f'{user.name}' +'.png') is None:
         image_name = 'default'
-    
+    else:
+        image_name = user.name
+
     context = {'user': user,
                'title': f'{user.name}\'s Profile',
                'path': request.path,
