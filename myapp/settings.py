@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'g8v%4g=sm+ld(qp$6mpz4i)0t-)yao69vu1)a9*7-%gfelqv9q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 ALLOWED_HOSTS = ['animal-abuse-registry.herokuapp.com', '127.0.0.1']
 
