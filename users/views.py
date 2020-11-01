@@ -68,7 +68,7 @@ def registerPage(request):
                 email = EmailMessage(
                     email_subject,
                     message,
-                    'nonreply@gmail.com',
+                    'lemonning0713@gmail.com',
                     to = [to_email],
                 )
 
