@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # User registration and login authentication
@@ -86,7 +87,7 @@ def registerPage(request):
 
 
         context = {'form': form}
-        return render(request, 'register.html', context)
+        return render(request, 'account/signup.html', context)
 '''
 # Send grid testing
 def registerPage(request):
@@ -203,6 +204,14 @@ def profilePage(request):
     return render(request, 'user_profile.html', context)
 
 
+class ManageSubmission(LoginRequiredMixin, View):
+    login_url = 'account_login'
+    redirect_field_name = 'next'
+    def get(self, request, *args, **kwargs):
+        context = {
+
+        }
+        return render(request, 'manage_submission.html', context)
 
 
 

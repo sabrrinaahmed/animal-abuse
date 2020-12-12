@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load account %}
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                {% user_display user as user_display %}
+                <p><strong>{% trans "Note" %}:</strong> {% blocktrans %}you are already logged in as {{ user_display }}.{% endblocktrans %}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </main>

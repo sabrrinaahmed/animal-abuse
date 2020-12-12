@@ -40,18 +40,21 @@
                   <a class="nav-link dropdown-toggle" href="{% url 'profile' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Profile <i class="fa fa-caret-down"></i></a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Manage Submission</a></li>
+                      <li><a class="dropdown-item" href="{% url 'manage_submission' %}">Manage Submission</a></li>
                   </ul>
               </li>
 
 
 
 
-              <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              {% comment %} <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> {% endcomment %}
+              <li><a href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           {% else %}
-              <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% comment %} <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> {% endcomment %}
+              <li><a href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 
-              <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a></li>
+              {% comment %} <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a></li> {% endcomment %}
+              <li><a href="{% url 'account_signup' %}"><i class="fas fa-user-plus"></i> Register</a></li>
 
           {% endif %}
     </ul>

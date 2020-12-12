@@ -1,6 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from PIL import Image
+from django.contrib.auth import get_user_model
+from allauth.account.signals import user_signed_up, user_logged_in
+
+
+User = get_user_model()
 
 # Create your models here.
 class Profile(models.Model):
@@ -21,3 +25,10 @@ class Profile(models.Model):
 			img.thumbnail(output_size)
 			img.save(self.image.path)
 
+
+def user_profile(request, user, **kwargs):
+	if user_signed_up:
+		Profile.objects.create(user=user)
+		print(user)
+
+user_signed_up.connect(receiver=user_profile, sender=User)
