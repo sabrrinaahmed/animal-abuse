@@ -1,0 +1,50 @@
+{% extends 'news_base.html' %}
+{% block news %}
+	
+	<div class="container">
+		<div class="row">
+			{% for x in api_cruelty.articles %}
+			<div class="col-sm">
+				<br>
+				<div class="card" style="width: 18rem;">
+				  	<img src="{{ x.urlToImage }}" class="card-img-top" alt="{{ x.source.name }}">
+				  	<div class="card-body">
+				    	<h5 class="card-title">{{x.title}}</h5>
+				    	<p class="card-text">{{x.description|truncatechars:150}}</p>
+				    	<a href="{{x.url}}" target="_blank" class="btn btn-secondary">Read More</a>
+				  	</div>
+				</div>
+				<br>
+			</div>
+			{% endfor %}
+			{% for x in api_abuser.articles %}
+			<div class="col-sm">
+				<div class="card" style="width: 18rem;">
+				  	<img src="{{ x.urlToImage }}" class="card-img-top" alt="{{ x.source.name }}">
+				  	<div class="card-body">
+				    	<h5 class="card-title">{{x.title}}</h5>
+				    	<p class="card-text">{{x.description|truncatechars:150}}</p>
+				    	<a href="{{x.url}}" target="_blank" class="btn btn-secondary">Read More</a>
+				  	</div>
+				</div>
+				<br>
+			</div>
+			{% endfor %}
+			{% for x in api_abuse.articles %}
+			<div class="col-sm">
+				<div class="card" style="width: 18rem;">
+				  	<img src="{{ x.urlToImage }}" class="card-img-top" alt="{{ x.source.name }}">
+				  	<div class="card-body">
+				    	<h5 class="card-title">{{x.title}}</h5>
+				    	<p class="card-text">{{x.description|truncatechars:150}}</p>
+				    	<a href="{{x.url}}" target="_blank" class="btn btn-secondary">Read More</a>
+
+				  	</div>
+				</div>
+				<br>
+			</div>
+			{% endfor %}			
+		</div>
+	</div>
+
+{% endblock %}

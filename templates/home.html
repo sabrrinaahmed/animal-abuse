@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Animal Abuse Registry Home
+{% endblock %}
+
+
+{% block content %}
+  <h1 class="page-header">Users Search Example</h1>
+  <p class="lead">Click on the <a href="{% url 'search' %}">Search</a> menu to explore the animal abuse registry.</p>
+  
+  <br>
+  <h4>{{abuses}}+ records currently listed</h4>
+  <br>
+  <h4>Disclaimer:</h4>
+  <p>The information contained in the registry is gathered from publicly open data in different States. The Animal Abuse Search does not independently verify the convictions, and cannot guarantee their accuracy. Therefore, this information should be regarded as a resource suggesting the need for further inquiry.
+  <br><br>Anyone who uses this information to knowingly harass or interfere with lawful commerce shall commit a violation of this Ordinance punishable as provided therein.</p>
+{% endblock %}

@@ -1,0 +1,133 @@
+<!-- REGISTRATION FORM -->
+<div class="text-center" style="padding:50px 0">
+	<div class="logo">register</div>
+	<!-- Main Form -->
+	<div class="login-form-1">
+		<form id="register-form" class="text-left" method="POST">
+			{% csrf_token %}
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group">
+					<div class="form-group">
+						<label for="reg_username" class="sr-only">User</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+					</div>
+
+					<div class="form-group">
+						<label for="reg_email" class="sr-only">Email</label>
+						<input type="text" class="form-control" id="email" name="email" placeholder="Email">
+					</div>
+
+					<div class="form-group">
+						<label for="reg_password" class="sr-only">Password</label>
+						<input type="password" class="form-control" id="password1" name="password1" placeholder="Password">
+					</div>
+
+					<div class="form-group">
+						<label for="reg_password_confirm" class="sr-only">Password Confirm</label>
+						<input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password">
+					</div>
+
+					<div class="form-group login-group-checkbox">
+						<input type="checkbox" class="" id="reg_agree" name="reg_agree">
+						<label for="reg_agree">i agree with <a href="#">terms</a></label>
+					</div>
+				</div>
+				<button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
+			</div>
+			<div class="etc-login-form">
+				<p>already have an account? <a href="#">login here</a></p>
+			</div>
+		</form>
+	</div>
+	<!-- end:Main Form -->
+</div>
+
+<script>
+	(function($) {
+    "use strict";
+	
+	// Options for Message
+	//----------------------------------------------
+	  var options = {
+		  'btn-loading': '<i class="fa fa-spinner fa-pulse"></i>',
+		  'btn-success': '<i class="fa fa-check"></i>',
+		  'btn-error': '<i class="fa fa-remove"></i>',
+		  'msg-success': 'All good! Redirecting...',
+		  'msg-error': 'Wrong login credentials!',
+		  'useAJAX': true,
+	  };
+	
+	// Register Form
+	//----------------------------------------------
+	// Validation
+  $("#register-form").validate({
+  	rules: {
+      username: "required",
+  	  password1: {
+  			required: true,
+  			minlength: 5
+  		},
+   		password2: {
+  			required: true,
+  			minlength: 5,
+  			equalTo: "#register-form [name=password1]"
+  		},
+  		email: {
+  	    required: true,
+  			email: true
+  		},
+  		reg_agree: "required",
+    },
+	  errorClass: "form-invalid",
+	  errorPlacement: function( label, element ) {
+	    if( element.attr( "type" ) === "checkbox" || element.attr( "type" ) === "radio" ) {
+    		element.parent().append( label ); // this would append the label after all your checkboxes/labels (so the error-label will be the last element in <div class="controls"> )
+	    }
+			else {
+  	  	label.insertAfter( element ); // standard behaviour
+  	  }
+    }
+  });
+
+	
+
+	// Loading
+	//----------------------------------------------
+  function remove_loading($form)
+  {
+  	$form.find('[type=submit]').removeClass('error success');
+  	$form.find('.login-form-main-message').removeClass('show error success').html('');
+  }
+
+  function form_loading($form)
+  {
+    $form.find('[type=submit]').addClass('clicked').html(options['btn-loading']);
+  }
+  
+  function form_success($form)
+  {
+	  $form.find('[type=submit]').addClass('success').html(options['btn-success']);
+	  $form.find('.login-form-main-message').addClass('show success').html(options['msg-success']);
+  }
+
+  function form_failed($form)
+  {
+  	$form.find('[type=submit]').addClass('error').html(options['btn-error']);
+  	$form.find('.login-form-main-message').addClass('show error').html(options['msg-error']);
+  }
+
+
+</script>
+<script>
+	
+	// Get the modal
+	var modal = document.getElementById('id01');
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+</script>
